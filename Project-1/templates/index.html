@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Recorder</title>
+</head>
+<body>
+    <table style="width:100%">
+        <tr>
+            <td style="width:50%">
+                <h2>Record and Upload Audio</h2>
+
+                <button id="record">Record</button>
+                <button id="stop">Stop</button>
+                <span id="timer">00:00</span>
+                <audio id="audio"></audio>
+                <form id="uploadForm" method="POST" action="/upload" enctype="multipart/form-data">
+                    <input type="hidden" name="audio_data" id="audioData">
+                </form>
+                <script src="script.js"></script>
+                <hr>
+                <h2>Recorded Files</h2>
+                <ul>
+                    {% for file in audio_files %}
+                    {% if file.endswith('.wav') %}
+                    <li>
+                        <audio controls>
+                            <source src="{{ url_for('uploaded_file', filename=file) }}" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio><br>
+                        {{ file }}
+                        <a href="{{ url_for('uploaded_file', filename=file.split('.wav')[0] + '.txt') }}">{{ file }}.txt</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </td>
+            <td style="width:50%">
+                <h2>Type in your text to generate audio</h2>
+                <form action="/upload_text" method="post">
+                    <textarea name="text" rows="10" cols="50"></textarea>
+                    <br>
+                    <input type="submit" value="Upload">
+                </form>
+                <hr>
+                <h2>Generated Audio Files</h2>
+                <ul>
+                    {% for tts_file in tts_files %}
+                    {% if tts_file.endswith('.wav') %}
+                    <li>
+                        <audio controls>
+                            <source src="{{ url_for('get_tts_file', filename=tts_file) }}" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio><br>
+                        {{ tts_file }}
+                        <a href="{{ url_for('get_tts_file', filename=tts_file.split('.wav')[0] + '.txt') }}">{{ tts_file }}.txt</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
