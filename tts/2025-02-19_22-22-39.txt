@@ -1,0 +1,4 @@
+Text:
+i lost the superbowl matches
+
+Sentiment: Negative

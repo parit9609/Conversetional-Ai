@@ -1,0 +1,4 @@
+Text:
+my parents are happy with my perfomance
+
+Sentiment: Positive

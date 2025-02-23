@@ -1,0 +1,5 @@
+Text:
+hello
+how are you
+
+Sentiment: Neutral
